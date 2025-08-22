@@ -21,8 +21,8 @@
 
 **快速开始**
 
-1. 下载程序: 获取 main.exe 可执行文件
-2. 运行程序: 双击 main.exe 或通过命令行运行
+1. 下载程序: 获取 Resident-Identity-Card-Validator.exe 可执行文件
+2. 运行程序: 双击 Resident-Identity-Card-Validator.exe 或通过命令行运行
 
 **操作指南**
 
