@@ -161,6 +161,38 @@ def calculate_check_digit(first_17):
     total = sum(int(first_17[i]) * factors[i] for i in range(17))
     return check_codes[total % 11]
 
+def get_zodiac(year):
+    """根据年份获取生肖"""
+    zodiacs = ["猴", "鸡", "狗", "猪", "鼠", "牛", "虎", "兔", "龙", "蛇", "马", "羊"]
+    return zodiacs[year % 12]
+
+def get_constellation(month, day):
+    """根据月日获取星座"""
+    if (month == 1 and day >= 20) or (month == 2 and day <= 18):
+        return "水瓶座"
+    elif (month == 2 and day >= 19) or (month == 3 and day <= 20):
+        return "双鱼座"
+    elif (month == 3 and day >= 21) or (month == 4 and day <= 19):
+        return "白羊座"
+    elif (month == 4 and day >= 20) or (month == 5 and day <= 20):
+        return "金牛座"
+    elif (month == 5 and day >= 21) or (month == 6 and day <= 21):
+        return "双子座"
+    elif (month == 6 and day >= 22) or (month == 7 and day <= 22):
+        return "巨蟹座"
+    elif (month == 7 and day >= 23) or (month == 8 and day <= 22):
+        return "狮子座"
+    elif (month == 8 and day >= 23) or (month == 9 and day <= 22):
+        return "处女座"
+    elif (month == 9 and day >= 23) or (month == 10 and day <= 23):
+        return "天秤座"
+    elif (month == 10 and day >= 24) or (month == 11 and day <= 22):
+        return "天蝎座"
+    elif (month == 11 and day >= 23) or (month == 12 and day <= 21):
+        return "射手座"
+    else:
+        return "摩羯座"
+
 def validate_id_card(id_card, region_dict):
     """验证身份证号码"""
     id_card = id_card.upper().strip()
@@ -206,6 +238,18 @@ def display_id_info(id_card, region_dict):
     birthdate_valid, birthdate_info = validate_birthdate(id_card[6:14])
     if birthdate_valid:
         print(f"🎂 出生日期: {birthdate_info}")
+        
+        # 提取年月日
+        year = int(id_card[6:10])
+        month = int(id_card[10:12])
+        day = int(id_card[12:14])
+        
+        # 计算生肖和星座
+        zodiac = get_zodiac(year)
+        constellation = get_constellation(month, day)
+        
+        print(f"🐉 生肖: {zodiac}")
+        print(f"✨ 星座: {constellation}")
     else:
         print(f"❌ 出生日期: {birthdate_info}")
     
@@ -274,6 +318,22 @@ def main():
             region_code = first_17[:6]
             region_name = get_region_name(region_code, region_dict)
             print(f"📍 居住地: {region_name}")
+            
+            # 显示生肖和星座（如果日期有效）
+            try:
+                year = int(first_17[6:10])
+                month = int(first_17[10:12])
+                day = int(first_17[12:14])
+                
+                # 验证日期是否有效
+                is_valid, _ = validate_birthdate(first_17[6:14])
+                if is_valid:
+                    zodiac = get_zodiac(year)
+                    constellation = get_constellation(month, day)
+                    print(f"🐉 生肖: {zodiac}")
+                    print(f"✨ 星座: {constellation}")
+            except:
+                pass  # 如果日期无效，跳过生肖和星座显示
         
         elif choice == '3':
             print("📊 批量验证模式")
